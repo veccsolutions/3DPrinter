@@ -42,15 +42,18 @@ difference() {
     }
 }
 
-// bearing mount
 middle = (bearingCarriageLength / 2);
 offset = (bearingDiameter / 2);
+
+//sidewalls
+
+// bearing mount
 
 translate([ middle - offset, 0, thickness])
 {
     difference()
     {
-        cube([bearingDiameter, bearingHeight, bearingDiameter / 2 - 1]);
+        cube([bearingDiameter, bearingHeight, bearingDiameter / 2 - 5]);
         translate([bearingDiameter / 2, 0, bearingDiameter / 2])
         {
             rotate([-90,0,0])
