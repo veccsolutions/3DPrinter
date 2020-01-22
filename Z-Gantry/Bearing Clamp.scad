@@ -1,6 +1,6 @@
 thickness = 5;
 bearingHeight = 50;
-bearingDiameter = 21;
+bearingDiameter = 21.15;
 bearingCarriageLength=50;
 bearingCarriageHeight = bearingHeight;
 footWidth = (bearingCarriageLength - bearingDiameter) / 2 - 1;
@@ -14,7 +14,7 @@ module cylinder_outer(height,radius,fn)
 
 module threeMMScrew()
 {
-    cylinder_outer(thickness+.1, 3.2/2, 100);
+    cylinder_outer(thickness+.1, 3.4/2, 100);
 }
 
 module carriageHoles()
@@ -80,7 +80,7 @@ module bearingClamp()
         difference()
         {
             cube([bearingDiameter+2, bearingHeight, bearingDiameter / 2 + 3]);
-            translate([bearingDiameter / 2 + 1, 0, 0])
+            translate([bearingDiameter / 2 + 1, 1, 0])
             {
                 rotate([-90,0,0])
                 {
@@ -91,7 +91,12 @@ module bearingClamp()
     }
 }
 
-
-feet();
-sidewalls();
-bearingClamp();
+union()
+{
+    rotate([90, 0, 0])
+    {
+        feet();
+        sidewalls();
+        bearingClamp();
+    }
+}
