@@ -1,8 +1,5 @@
 include <Common.scad>;
 
-
-insideXFlange();
-
 switchHeight = 28;
 switchWidth = 48;
 switchSpace = 10;
@@ -13,8 +10,7 @@ switchMinZ = panelCenterZ - (switchHeight / 2);
 switchMaxZ = panelCenterZ + (switchHeight / 2);
 
 reinforcementThickness = 10;
-
-translate([standFlangeWidth, 0, 0])
+module plate()
 {
     difference()
     {
@@ -38,10 +34,6 @@ translate([standFlangeWidth, 0, 0])
             }
         }   
     }
-    translate([switchPanelWidth, 0, 0])
-    {
-        insideXFlange();
-    }
     topRail(width = switchPanelWidth);
     translate([0, -reinforcementThickness, 0])
     {
@@ -53,3 +45,20 @@ translate([standFlangeWidth, 0, 0])
         cube([standThickness, reinforcementThickness, standHeight]);
     }
 }
+
+module build()
+{
+    insideXFlange();
+
+    translate([standFlangeWidth, 0, 0])
+    {
+        plate();
+    }
+
+    translate([standFlangeWidth + switchPanelWidth, 0, 0])
+    {
+        insideXFlange();
+    }
+}
+
+build();

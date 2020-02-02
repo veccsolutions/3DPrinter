@@ -10,14 +10,55 @@ module polyhole(h, d)
     }
 }
 
-module 3mmScrew()
+module fanGrill(size, holeSpace, screwOffset)
 {
-    polyhole(h = standThickness, d = 3);
+    intersection()
+    {
+        translate([size / 2, 20, 0])
+        {
+            cylinder(d = size * shrinkage, h = standThickness, $fn = 100);
+        }
+        for(fanX = [0:holeSpace:size])
+        {
+            for(fanZ = [0:holeSpace:size])
+            {
+                translate([fanX, fanZ, 0])
+                {
+                    5mmScrew();
+                }
+            }
+        }
+    }
+
+    translate([screwOffset, screwOffset, 0])
+    {
+        5mmScrew();
+    }
+
+    translate([size - screwOffset, screwOffset, 0])
+    {
+        5mmScrew();
+    }
+
+    translate([screwOffset, size - screwOffset, 0])
+    {
+        5mmScrew();
+    }
+
+    translate([size - screwOffset, size - screwOffset, 0])
+    {
+        5mmScrew();
+    }
 }
 
-module 5mmScrew()
+module 3mmScrew(height = standThickness)
 {
-    polyhole(h = standThickness, d = 5);
+    polyhole(h = height, d = 3 * shrinkage * 1.1);
+}
+
+module 5mmScrew(height = standThickness)
+{
+    polyhole(h = height, d = 5.1 * shrinkage * 1.1);
 }
 
 module outsideFlange()
@@ -104,4 +145,9 @@ module topRail(width)
             }            
         }
     }
+}
+
+module 40mmFan()
+{
+    fanGrill(size = 40, holeSpace = 40 / 6, screwOffset = 3);
 }
